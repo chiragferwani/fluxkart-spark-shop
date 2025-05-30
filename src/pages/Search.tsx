@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
@@ -15,7 +16,7 @@ const searchProducts = [
     originalPrice: 1299,
     rating: 4.8,
     reviews: 2847,
-    image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop',
     category: 'Mobile Phones',
     discount: 8,
   },
@@ -37,7 +38,7 @@ const searchProducts = [
     originalPrice: 399,
     rating: 4.9,
     reviews: 1892,
-    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop',
     category: 'Headphones',
     discount: 13,
   },
@@ -48,15 +49,68 @@ const searchProducts = [
     originalPrice: 249,
     rating: 4.7,
     reviews: 3156,
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop',
     category: 'TWS Earbuds',
     discount: 8,
+  },
+  {
+    id: 5,
+    name: 'Samsung Galaxy S24 Ultra',
+    price: 1099,
+    originalPrice: 1199,
+    rating: 4.6,
+    reviews: 1567,
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop',
+    category: 'Mobile Phones',
+    discount: 8,
+  },
+  {
+    id: 6,
+    name: 'iPad Pro 12.9"',
+    price: 1099,
+    originalPrice: 1199,
+    rating: 4.8,
+    reviews: 2134,
+    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop',
+    category: 'Tablets',
+    discount: 8,
+  },
+  {
+    id: 7,
+    name: 'Bose QuietComfort 45',
+    price: 279,
+    originalPrice: 329,
+    rating: 4.7,
+    reviews: 1234,
+    image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&h=300&fit=crop',
+    category: 'Headphones',
+    discount: 15,
+  },
+  {
+    id: 8,
+    name: 'Sony WF-1000XM4',
+    price: 199,
+    originalPrice: 279,
+    rating: 4.6,
+    reviews: 2345,
+    image: 'https://images.unsplash.com/photo-1590658165737-15a047b7cd2c?w=400&h=300&fit=crop',
+    category: 'TWS Earbuds',
+    discount: 29,
   },
 ];
 
 const Search = () => {
+  const [searchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(searchProducts);
+
+  useEffect(() => {
+    const queryParam = searchParams.get('q');
+    if (queryParam) {
+      setSearchQuery(queryParam);
+      handleSearch(queryParam);
+    }
+  }, [searchParams]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -71,6 +125,11 @@ const Search = () => {
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    handleSearch(value);
+  };
+
   return (
     <div className="min-h-screen bg-white font-sf-pro">
       <Header />
@@ -83,7 +142,7 @@ const Search = () => {
               type="text"
               placeholder="Search for electronics..."
               value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={handleInputChange}
               className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-full focus:border-fluxkart-primary transition-colors text-lg"
             />
             <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6" />

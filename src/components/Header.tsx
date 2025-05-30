@@ -6,9 +6,11 @@ import { ShoppingCart, Search, User, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import AuthModal from './AuthModal';
+import Cart from './Cart';
 
 const Header = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -23,11 +25,16 @@ const Header = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
     }
   };
 
   const handleLogoClick = () => {
     navigate('/');
+  };
+
+  const handleCartClick = () => {
+    setIsCartOpen(true);
   };
 
   return (
@@ -82,7 +89,11 @@ const Header = () => {
                 Sign Up
               </Button>
 
-              <Button variant="ghost" className="relative hover:bg-gray-100">
+              <Button 
+                variant="ghost" 
+                className="relative hover:bg-gray-100"
+                onClick={handleCartClick}
+              >
                 <ShoppingCart className="h-5 w-5" />
                 {getTotalItems() > 0 && (
                   <span className="absolute -top-2 -right-2 bg-fluxkart-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -104,6 +115,11 @@ const Header = () => {
         onClose={() => setIsAuthModalOpen(false)}
         mode={authMode}
         onModeChange={setAuthMode}
+      />
+
+      <Cart
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
       />
     </>
   );
