@@ -7,6 +7,7 @@ interface CartItem {
   price: number;
   image: string;
   quantity: number;
+  category: string;
 }
 
 interface Product {
@@ -14,6 +15,7 @@ interface Product {
   name: string;
   price: number;
   image: string;
+  category: string;
 }
 
 export const useCart = () => {
