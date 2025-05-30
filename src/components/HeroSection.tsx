@@ -2,8 +2,19 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ShoppingBag, Zap, Shield } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
+  const handleShopNow = () => {
+    navigate('/search');
+  };
+
+  const handleExploreCategories = () => {
+    navigate('/categories');
+  };
+
   return (
     <section className="bg-gradient-to-br from-fluxkart-primary via-fluxkart-purple to-fluxkart-secondary py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,11 +31,20 @@ const HeroSection = () => {
               Quality guaranteed, prices unmatched.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button size="lg" className="bg-white text-fluxkart-primary hover:bg-gray-100 font-semibold">
+              <Button 
+                size="lg" 
+                onClick={handleShopNow}
+                className="bg-white text-fluxkart-primary hover:bg-gray-100 font-semibold"
+              >
                 <ShoppingBag className="mr-2 h-5 w-5" />
                 Shop Now
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-fluxkart-primary">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                onClick={handleExploreCategories}
+                className="border-2 border-white text-white hover:bg-white hover:text-fluxkart-primary font-semibold"
+              >
                 Explore Categories
               </Button>
             </div>

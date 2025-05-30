@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import ProductCard from './ProductCard';
 
 const products = [
   {
@@ -12,7 +12,7 @@ const products = [
     originalPrice: 1299,
     rating: 4.8,
     reviews: 2847,
-    image: '/placeholder.svg',
+    image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=300&fit=crop',
     category: 'Mobile Phones',
     discount: 8,
   },
@@ -23,7 +23,7 @@ const products = [
     originalPrice: 399,
     rating: 4.9,
     reviews: 1892,
-    image: '/placeholder.svg',
+    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop',
     category: 'Headphones',
     discount: 13,
   },
@@ -34,7 +34,7 @@ const products = [
     originalPrice: 249,
     rating: 4.7,
     reviews: 3156,
-    image: '/placeholder.svg',
+    image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop',
     category: 'TWS Earbuds',
     discount: 8,
   },
@@ -45,13 +45,19 @@ const products = [
     originalPrice: 1199,
     rating: 4.6,
     reviews: 1567,
-    image: '/placeholder.svg',
+    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop',
     category: 'Mobile Phones',
     discount: 8,
   },
 ];
 
 const FeaturedProducts = () => {
+  const navigate = useNavigate();
+
+  const handleViewAllProducts = () => {
+    navigate('/search');
+  };
+
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,80 +72,17 @@ const FeaturedProducts = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
-            <Card
-              key={product.id}
-              className="group cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
-            >
-              <CardContent className="p-0">
-                <div className="relative">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-fluxkart-secondary text-white px-2 py-1 rounded-full text-xs font-bold">
-                      {product.discount}% OFF
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <button className="bg-white/80 backdrop-blur-sm p-2 rounded-full hover:bg-white transition-colors">
-                      <svg className="h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <div className="text-sm text-fluxkart-primary font-medium mb-2">
-                    {product.category}
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-fluxkart-primary transition-colors">
-                    {product.name}
-                  </h3>
-                  
-                  <div className="flex items-center mb-3">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < Math.floor(product.rating)
-                              ? 'text-fluxkart-accent fill-current'
-                              : 'text-gray-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-600 ml-2">
-                      {product.rating} ({product.reviews})
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-gray-900">
-                        ${product.price}
-                      </span>
-                      <span className="text-sm text-gray-500 line-through">
-                        ${product.originalPrice}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <Button className="w-full bg-fluxkart-primary hover:bg-fluxkart-primary/90 text-white">
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    Add to Cart
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
         
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="border-fluxkart-primary text-fluxkart-primary hover:bg-fluxkart-primary hover:text-white">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            onClick={handleViewAllProducts}
+            className="border-fluxkart-primary text-fluxkart-primary hover:bg-fluxkart-primary hover:text-white"
+          >
             View All Products
           </Button>
         </div>

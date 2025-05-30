@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Smartphone, Headphones, Music, Speaker } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const categories = [
   {
@@ -39,6 +40,16 @@ const categories = [
 ];
 
 const CategorySection = () => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = () => {
+    navigate('/categories');
+  };
+
+  const handleBrowseAll = () => {
+    navigate('/categories');
+  };
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,6 +68,7 @@ const CategorySection = () => {
             return (
               <Card
                 key={category.id}
+                onClick={handleCategoryClick}
                 className="group cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-0 overflow-hidden"
               >
                 <CardContent className="p-0">
@@ -75,7 +87,10 @@ const CategorySection = () => {
                     <p className="text-gray-600 text-sm mb-4">
                       Discover the latest and most popular products in this category
                     </p>
-                    <button className="text-fluxkart-primary font-semibold text-sm hover:underline group-hover:text-fluxkart-secondary transition-colors">
+                    <button 
+                      onClick={handleBrowseAll}
+                      className="text-fluxkart-primary font-semibold text-sm hover:underline group-hover:text-fluxkart-secondary transition-colors"
+                    >
                       Browse All →
                     </button>
                   </div>
